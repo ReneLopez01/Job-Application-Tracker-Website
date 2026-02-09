@@ -20,6 +20,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(25), unique=True, nullable=False)
     password_hash = db.Column(db.String(150), nullable=False)
+    applications = db.relationship("Application", backref="user", lazy=True)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -31,6 +32,7 @@ class User(db.Model):
 class Application(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     company = db.Column(db.String(30), nullable=False)
     jobTitle = db.Column(db.String(30), nullable=False)
     salary = db.Column(db.Float(precision=2), nullable=False)
@@ -58,8 +60,11 @@ def dashboard():
     if "username" in session:
         page = request.args.get('page', 1, type=int)
 
-        apps_pagination = Application.query.order_by(
-            Application.id.desc()).paginate(page=page, per_page=10)
+        user = User.query.filter_by(username=session["username"]).first()
+
+        apps_pagination = Application.query.filter_by(
+            user_id=user.id
+        ).order_by(Application.id.desc()).paginate(page=page, per_page=250)
 
         return render_template("dashboard.html",
                                username=session['username'],
@@ -71,13 +76,15 @@ def dashboard():
 def add_application():
     # Get data from the form
     original_date = request.form.get("application-date")
+    user = User.query.filter_by(username=session["username"]).first()
     new_app = Application(
         company=request.form.get("company"),
         jobTitle=request.form.get("jobTitle"),
         salary=float(request.form.get("salary", 0)),
         location=request.form.get("location"),
         applicationStatus=request.form.get("select-status"),
-        date=datetime.strptime(original_date, "%Y-%m-%d").date()
+        date=datetime.strptime(original_date, "%Y-%m-%d").date(),
+        user_id=user.id
     )
     db.session.add(new_app)
     db.session.commit()
@@ -120,7 +127,7 @@ def list_users():
     page = request.args.get('page', 1, type=int)
 
     users_pagination = User.query.order_by(
-        User.id.desc()).paginate(page=page, per_page=10)
+        User.id.desc()).paginate(page=page, per_page=250)
 
     return render_template('users.html', users=users_pagination)
 
