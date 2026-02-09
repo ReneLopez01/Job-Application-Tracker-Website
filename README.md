@@ -56,6 +56,34 @@ This project was built to practice real-world full-stack development concepts in
 ### Final Result
 ![After Deleting Application](screenshots/after_delete.PNG)
 
+## How to Run Locally
+
+Follow these steps to run the project: ( following steps are meant to be inputed on terminal )
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/jobtrack.io.git
+
+# Navigate into the project directory
+cd jobtrack.io
+
+# Create a virtual environment
+python -m venv venv
+
+# Activate the virtual environment
+source venv/bin/activate   # macOS / Linux
+# venv\Scripts\activate    # Windows
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the Flask app
+python main.py
+```
+## Then open your browser and go to:
+
+http://127.0.0.1:5000
+
 ## Project Structure  
 
 ```bash
@@ -74,3 +102,5 @@ project/
 │   └── styles.css
 │
 └── README.md
+
+
