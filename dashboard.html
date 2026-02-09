@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="container">
+    <h1> Welcome, {{username}} </h1>
+    <p> Add another application to the list </p>
+    <a href="{{url_for('logout')}}" class="btn btn-logout">Logout</a>
+
+</div>
+<table class="applic-table">
+    <thead>
+        <tr>
+            <th>Company</th>
+            <th>Job Title</th>
+            <th>Yearly Salary</th>
+            <th>Location</th>
+            <th>Date of Application</th>
+            <th>Application Status</th>
+            <th>Actions</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <form action="{{ url_for('add_application') }}" method="POST">
+                <td><input type="text" name="company" placeholder="ex. Amazon" required></td>
+                <td><input type="text" name="jobTitle" placeholder="ex. Web Developer" required></td>
+                <td>$<input type="number" step="0.01" name="salary" placeholder="ex. 55,000" min="0" required></td>
+                <td><input type="text" name="location" placeholder="ex. El Paso,Texas" required></td>
+                <td><input type="date" name="application-date" required></td>
+                <td>
+                    <select name="select-status" required>
+                        <option value="Applied">Applied</option>
+                        <option value="Rejected">Rejected</option>
+                        <option value="Interviewing">Interviewing</option>
+                        <option value="In Progress">Progress</option>
+                        <option value="Accepted">Accepted</option>
+                    </select>
+                </td>
+                <td><button type="submit" class="btn-add">Add App</button></td>
+            </form>
+        </tr>
+
+        {% for app in applications.items %}
+        <tr>
+            <td>{{app.company }}</td>
+            <td>{{app.jobTitle }}</td>
+            <td>${{ app.salary | dollar}}</td>
+            <td>{{app.location}}</td>
+            <td>{{app.date | mmddyyyy}}</td>
+            <td>{{app.applicationStatus}}</td>
+            <td>
+                <form action="{{ url_for('delete_application', app_id=app.id) }}" method="POST">
+                    <button type="submit" class="btn-delete"
+                        onclick="return confirm('Delete this entry?')">Remove</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
