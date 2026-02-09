@@ -51,10 +51,10 @@ This project was built to practice real-world full-stack development concepts in
 ![Add Application](screenshots/add.png)
 
 ### Delete Application 
-![Add Application](screenshots/delete.png)
+![Delete Application](screenshots/delete.PNG)
 
 ### Final Result
-![Add Application](screenshots/after_delete.png)
+![After Deleting Application](screenshots/after_delete.PNG)
 
 ## Project Structure  
 
