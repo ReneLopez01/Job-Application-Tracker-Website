@@ -48,7 +48,7 @@ This project was built to practice real-world full-stack development concepts in
 ![Dashboard](screenshots/dashboard.png)
 
 ### Add Application  
-![Add Application](screenshots/add.png)
+![Add Application](screenshots/Add.png)
 
 ### Delete Application 
 ![Delete Application](screenshots/delete.PNG)
