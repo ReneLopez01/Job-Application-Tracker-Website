@@ -62,7 +62,7 @@ Follow these steps to run the project: ( following steps are meant to be inputed
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/jobtrack.io.git
+git clone https://github.com/ReneLopez01/jobtrack.io.git
 
 # Navigate into the project directory
 cd jobtrack.io
